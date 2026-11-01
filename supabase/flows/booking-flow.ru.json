@@ -1,0 +1,308 @@
+{
+  "version": "7.1",
+  "data_api_version": "3.0",
+  "routing_model": {
+    "SCREEN_SERVICE": [
+      "SCREEN_SLOT"
+    ],
+    "SCREEN_SLOT": [
+      "SCREEN_CONFIRM"
+    ],
+    "SCREEN_CONFIRM": []
+  },
+  "screens": [
+    {
+      "id": "SCREEN_SERVICE",
+      "title": "Запись",
+      "data": {
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              }
+            }
+          },
+          "__example__": [
+            {
+              "id": "svc_exam",
+              "title": "Müayinə"
+            },
+            {
+              "id": "svc_clean",
+              "title": "Təmizləmə"
+            },
+            {
+              "id": "svc_fill",
+              "title": "Plomb"
+            }
+          ]
+        },
+        "dentists": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              }
+            }
+          },
+          "__example__": [
+            {
+              "id": "any",
+              "title": "Fərqi yoxdur"
+            },
+            {
+              "id": "doc_1",
+              "title": "Dr. Elvin"
+            },
+            {
+              "id": "doc_2",
+              "title": "Dr. Nərmin"
+            }
+          ]
+        }
+      },
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "Dropdown",
+            "name": "service",
+            "label": "Услуга",
+            "required": true,
+            "data-source": "${data.services}"
+          },
+          {
+            "type": "RadioButtonsGroup",
+            "name": "dentist",
+            "label": "Врач",
+            "required": true,
+            "data-source": "${data.dentists}"
+          },
+          {
+            "type": "Footer",
+            "label": "Далее",
+            "on-click-action": {
+              "name": "data_exchange",
+              "payload": {
+                "step": "dates",
+                "service": "${form.service}",
+                "dentist": "${form.dentist}"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "SCREEN_SLOT",
+      "title": "Дата и время",
+      "data": {
+        "service": {
+          "type": "string",
+          "__example__": "svc_clean"
+        },
+        "dentist": {
+          "type": "string",
+          "__example__": "any"
+        },
+        "dates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              }
+            }
+          },
+          "__example__": [
+            {
+              "id": "2026-10-02",
+              "title": "2 oktyabr, cümə"
+            },
+            {
+              "id": "2026-10-05",
+              "title": "5 oktyabr, bazar ertəsi"
+            }
+          ]
+        },
+        "slots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              }
+            }
+          },
+          "__example__": [
+            {
+              "id": "2026-10-02T09:30",
+              "title": "09:30"
+            },
+            {
+              "id": "2026-10-02T11:00",
+              "title": "11:00"
+            },
+            {
+              "id": "2026-10-02T14:30",
+              "title": "14:30"
+            }
+          ]
+        },
+        "slots_visible": {
+          "type": "boolean",
+          "__example__": false
+        },
+        "has_error": {
+          "type": "boolean",
+          "__example__": false
+        },
+        "error_message": {
+          "type": "string",
+          "__example__": ""
+        }
+      },
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "If",
+            "condition": "${data.has_error}",
+            "then": [
+              {
+                "type": "TextCaption",
+                "text": "${data.error_message}"
+              }
+            ]
+          },
+          {
+            "type": "Dropdown",
+            "name": "date",
+            "label": "Дата",
+            "required": true,
+            "data-source": "${data.dates}",
+            "on-select-action": {
+              "name": "data_exchange",
+              "payload": {
+                "step": "slots",
+                "service": "${data.service}",
+                "dentist": "${data.dentist}",
+                "date": "${form.date}"
+              }
+            }
+          },
+          {
+            "type": "If",
+            "condition": "${data.slots_visible}",
+            "then": [
+              {
+                "type": "ChipsSelector",
+                "name": "slot",
+                "label": "Свободное время",
+                "required": true,
+                "max-selected-items": 1,
+                "data-source": "${data.slots}"
+              }
+            ],
+            "else": [
+              {
+                "type": "TextCaption",
+                "text": "Выберите дату, чтобы увидеть свободное время."
+              }
+            ]
+          },
+          {
+            "type": "Footer",
+            "label": "Далее",
+            "enabled": "${data.slots_visible}",
+            "on-click-action": {
+              "name": "data_exchange",
+              "payload": {
+                "step": "hold",
+                "service": "${data.service}",
+                "dentist": "${data.dentist}",
+                "date": "${form.date}",
+                "slot": "${form.slot}"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "SCREEN_CONFIRM",
+      "title": "Подтверждение",
+      "terminal": true,
+      "success": true,
+      "data": {
+        "summary": {
+          "type": "string",
+          "__example__": "Təmizləmə · 45 dəq\n2 oktyabr, cümə · 11:00"
+        },
+        "patient_name": {
+          "type": "string",
+          "__example__": ""
+        },
+        "hold_note": {
+          "type": "string",
+          "__example__": "Saat 10 dəqiqə saxlanılır."
+        },
+        "hold_id": {
+          "type": "string",
+          "__example__": "hold_8f2c1a"
+        }
+      },
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "TextBody",
+            "text": "${data.summary}"
+          },
+          {
+            "type": "TextInput",
+            "name": "name",
+            "label": "Ваше имя",
+            "input-type": "text",
+            "required": true,
+            "init-value": "${data.patient_name}"
+          },
+          {
+            "type": "TextCaption",
+            "text": "${data.hold_note}"
+          },
+          {
+            "type": "Footer",
+            "label": "Подтвердить",
+            "on-click-action": {
+              "name": "complete",
+              "payload": {
+                "hold_id": "${data.hold_id}",
+                "name": "${form.name}"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

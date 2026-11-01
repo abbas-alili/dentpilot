@@ -1,0 +1,25 @@
+{"id":"az01","lang":"az","text":"Salam, sabah müayinəyə yazılmaq istəyirəm","intent":"book"}
+{"id":"az02","lang":"az","text":"cümə günü boş vaxt var?","intent":"book"}
+{"id":"az03","lang":"az","text":"salam sabah yer varmi","intent":"book"}
+{"id":"az04","lang":"az","text":"Randevumu gələn həftəyə keçirmək olar?","intent":"reschedule"}
+{"id":"az05","lang":"az","text":"Sabahkı randevumu ləğv etmək istəyirəm","intent":"cancel"}
+{"id":"az06","lang":"az","text":"Bəli, gələcəm","intent":"confirm_attendance"}
+{"id":"az07","lang":"az","text":"Neçədən neçəyə işləyirsiniz?","intent":"faq","faq_topic":"hours"}
+{"id":"az08","lang":"az","text":"Klinika harada yerləşir?","intent":"faq","faq_topic":"location"}
+{"id":"az09","lang":"az","text":"unvaniniz hardadir","intent":"faq","faq_topic":"location"}
+{"id":"az10","lang":"az","text":"Plomb neçəyədir?","intent":"faq","faq_topic":"price_range"}
+{"id":"az11","lang":"az","text":"Xatırlatma göndərməyin artıq","intent":"opt_out"}
+{"id":"az12","lang":"az","text":"Administratorla danışmaq istəyirəm","intent":"human_request"}
+{"id":"az13","lang":"az","text":"Diş çəkdirəndən sonra nə vaxt yemək olar?","intent":"clinical_question"}
+{"id":"az14","lang":"az","text":"Dünən çox gözlədim, heç kim məlumat vermədi","intent":"complaint"}
+{"id":"az15","lang":"az","text":"Salam","intent":"greeting"}
+{"id":"az16","lang":"az","text":"Çox sağ olun!","intent":"thanks"}
+{"id":"ru01","lang":"ru","text":"Здравствуйте, хочу записаться на чистку","intent":"book"}
+{"id":"ru02","lang":"ru","text":"Есть свободное время в субботу?","intent":"book"}
+{"id":"ru03","lang":"ru","text":"Можно перенести мою запись на четверг?","intent":"reschedule"}
+{"id":"ru04","lang":"ru","text":"Отмените, пожалуйста, мою запись","intent":"cancel"}
+{"id":"ru05","lang":"ru","text":"Во сколько вы открываетесь?","intent":"faq","faq_topic":"hours"}
+{"id":"ru06","lang":"ru","text":"Сколько стоит пломба?","intent":"faq","faq_topic":"price_range"}
+{"id":"ru07","lang":"ru","text":"Позовите администратора","intent":"human_request"}
+{"id":"ru08","lang":"ru","text":"Можно ли полоскать рот после удаления зуба?","intent":"clinical_question"}
+{"id":"ru09","lang":"ru","text":"Спасибо!","intent":"thanks"}
